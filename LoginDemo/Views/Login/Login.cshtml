@@ -1,0 +1,87 @@
+﻿@model LoginDemo.Models.Account
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!-- Bootstrap core CSS-->
+<link href="~/CustomTheme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="~/CustomTheme/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Custom styles for this template-->
+<link href="~/CustomTheme/css/sb-admin.css" rel="stylesheet">
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    //This is for creating form tag
+    @Html.AntiForgeryToken() // Prevent CSRF attack
+    @Html.ValidationSummary(false, "", new {@class="text-danger" })
+
+    if (@ViewBag.Message != null)
+    {
+        <div style="border: 1px solid red">
+            @ViewBag.Message
+        </div>
+    }
+
+    <body class="bg-dark">
+        <div class="container">
+            <div class="card card-login mx-auto mt-5">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(p => p.UserName, new { id = "inputEmail", @class = "form-control", required = "required", autofocus = "autofocus", placeholder = "Username" })                     
+                                <label for="inputEmail">Username</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @{
+                                    if (Model != null)
+                                    {
+                                        @Html.PasswordFor(p => p.Password, new { id = "inputPassword", @class = "form-control", value = Model.Password, required = "required", autofocus = "autofocus", placeholder = "Password" });
+                                    }
+                                    else
+                                    {
+                                        @Html.PasswordFor(p => p.Password, new { id = "inputPassword", @class = "form-control", required = "required", autofocus = "autofocus", placeholder = "Password" });
+                                    }
+                                }
+                                <label for="inputPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(p => p.IsRemembered)
+                                <label>Remember Password</label>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-block" value="login" />
+                    </form>
+                    <div class="text-center">
+                        <a class="d-block small mt-3" href="register.html">Register an Account</a>
+                        <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+}
+
+<!-- Bootstrap core JavaScript-->
+<script src="~/CustomTheme/vendor/jquery/jquery.min.js"></script>
+<script src="~/CustomTheme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/CustomTheme/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+@*This below line is for creating javascript section*@
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+}
